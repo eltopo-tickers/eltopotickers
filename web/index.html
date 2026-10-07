@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELTOPO - Analisis de Acciones</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="header-top">
+        <div class="logo">ELTOPO</div>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div>
+</header>
+
+<main class="content">
+
+    <div class="search-wrap">
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="tickerInput" placeholder="Buscar accion o ticker..." autocomplete="off" />
+            <button class="btn-escarbar" id="btnEscarbar">Escarbar</button>
+        </div>
+    </div>
+
+    <div class="mode-selector">
+        <div class="mode-row-auto">
+            <button class="mode-btn active" data-mode="auto">AUTO</button>
+        </div>
+        <div class="mode-row-styles">
+            <button class="mode-btn" data-mode="scalping">SCALPING</button>
+            <button class="mode-btn" data-mode="day">DAY</button>
+            <button class="mode-btn" data-mode="swing">SWING</button>
+        </div>
+    </div>
+
+    <div id="loading" class="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>Analizando...</p>
+    </div>
+
+    <div id="resultado" class="cards"></div>
+
+</main>
+
+<footer class="footer">
+    ELTOPO © 2026 — Analisis tecnico y fundamental
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>

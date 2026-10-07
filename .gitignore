@@ -1,0 +1,35 @@
+﻿# Byte-compiled
+__pycache__/
+*.py[cod]
+*.so
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+
+# Variables de entorno (SECRETAS)
+.env
+.env.local
+*.env
+
+# Base de datos local
+*.db
+data/cache.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.tmp
+
+# Temporales
+_*.py
+test_*.py
