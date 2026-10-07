@@ -75,6 +75,21 @@ def obtener_sentimiento(ticker):
     return data
 
 
+
+def _ajustar_crecimiento(v):
+    """Ajusta valores de crecimiento de Finnhub que vienen en escalas raras."""
+    if v is None:
+        return None
+    try:
+        v = float(v)
+        # Si es > 100, probablemente esta x10
+        if abs(v) > 100:
+            v = v / 10
+        return round(v, 2)
+    except (ValueError, TypeError):
+        return v
+
+
 def obtener_fundamental_finnhub(ticker):
     """Obtiene datos fundamentales desde Finnhub (fallback)."""
     ticker = ticker.upper()
@@ -140,8 +155,10 @@ def obtener_fundamental_finnhub(ticker):
             "empleados": None,
 
             # Crecimiento
-            "ingresos_yoy": _norm_pct(m.get("revenueGrowthTTMYoy")),
-            "beneficios_yoy": _norm_pct(m.get("epsGrowthTTMYoy")),
+            # Finnhub devuelve revenueGrowthTTMYoy en escalas distintas
+            # Si > 100, dividir entre 10 (probable x10)
+            "ingresos_yoy": _ajustar_crecimiento(m.get("revenueGrowthTTMYoy")),
+            "beneficios_yoy": _ajustar_crecimiento(m.get("epsGrowthTTMYoy")),
             "crecimiento_beneficios_q": _norm_pct(m.get("epsGrowthQuarterlyYoy")),
 
             # Margenes
