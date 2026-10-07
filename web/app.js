@@ -3,7 +3,7 @@
 // URL base del API (produccion: cambia a tu URL de Render)
 const API_BASE_URL = window.location.hostname === "localhost"
     ? ""
-    : "https://eltopo-api.onrender.com";
+    : "https://eltopotickers.onrender.com";
 
 // ELTOPO - Frontend JS
 

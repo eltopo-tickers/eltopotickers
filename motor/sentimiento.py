@@ -153,7 +153,7 @@ def obtener_fundamental_finnhub(ticker):
             "roa": _norm_pct(m.get("roaTTM")),
 
             # Dividendos
-            "dividend_yield": _norm_pct(m.get("dividendYieldIndicatedAnnual")),
+            "dividend_yield": _safe("dividendYieldIndicatedAnnual"),
             "payout_ratio": _norm_pct(m.get("payoutRatioTTM")),
 
             # Tamano
