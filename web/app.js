@@ -206,7 +206,16 @@ const CLASE_DOT = {
 
 function fmtPct(v) {
     if (v === null || v === undefined) return "-";
-    return (v * 100).toFixed(2) + "%";
+    // Si |v| < 1 -> es decimal (0.164 -> 16.4%)
+    // Si |v| >= 1 -> ya esta en porcentaje (14.24 -> 14.24%)
+    // Si |v| > 500 -> es un valor anomalo, dividir entre 100
+    let pct = v;
+    if (Math.abs(v) < 1) {
+        pct = v * 100;
+    } else if (Math.abs(v) > 500) {
+        pct = v / 100;
+    }
+    return pct.toFixed(2) + "%";
 }
 
 function fmtNum(v, dec) {
@@ -346,7 +355,7 @@ function renderizar(data) {
             '<div class="op-item"><span class="label">P/B:</span><span class="valor">' + fmtNum(f.pb) + '</span></div>' +
             '<div class="op-item"><span class="label">ROE:</span><span class="valor">' + fmtPct(f.roe) + '</span></div>' +
             '<div class="op-item"><span class="label">Deuda/Equity:</span><span class="valor">' + fmtNum(f.deuda_equity) + '</span></div>' +
-            '<div class="op-item"><span class="label">Dividendo:</span><span class="valor">' + (f.dividend_yield ? f.dividend_yield.toFixed(2) + "%" : "-") + '</span></div>' +
+            '<div class="op-item"><span class="label">Dividendo:</span><span class="valor">' + fmtPct(f.dividend_yield) + '</span></div>' +
             '<div class="op-item"><span class="label">Market Cap:</span><span class="valor">' + fmtBig(f.market_cap) + '</span></div>' +
             '</div>';
         resultado.appendChild(cardF);
