@@ -109,13 +109,26 @@ def obtener_fundamental_finnhub(ticker):
         # Finnhub devuelve los ratios como porcentaje o decimal
         # Normalizamos los que están como decimal
         def _norm_pct(v):
+            """Normaliza porcentajes de Finnhub.
+            
+            Finnhub devuelve valores en distintos formatos:
+            - 0.28 (decimal) -> 28%
+            - 25.63 (porcentaje) -> 25.63%
+            - 2563 (porcentaje x100) -> 25.63%
+            - 87877 (porcentaje x10000) -> 878.77%
+            """
             if v is None:
                 return None
             try:
                 v = float(v)
-                # Si es < 1 se asume decimal (0.28 = 28%)
-                # Si es >= 1 ya está en porcentaje (28 = 28%)
-                return v if abs(v) >= 1 else v * 100
+                # Si es muy grande (>500), asumimos que está x100
+                if abs(v) > 500:
+                    v = v / 100
+                # Si es < 1, es decimal -> x100
+                elif abs(v) < 1:
+                    v = v * 100
+                # Si está entre 1 y 500, ya está en porcentaje
+                return round(v, 2)
             except (ValueError, TypeError):
                 return v
 
